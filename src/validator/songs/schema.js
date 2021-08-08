@@ -1,5 +1,5 @@
 const Joi = require('joi');
- 
+
 const SongPayloadSchema = Joi.object({
   title: Joi.string().required(),
   year: Joi.number().required(),
@@ -7,5 +7,5 @@ const SongPayloadSchema = Joi.object({
   genre: Joi.string(),
   duration: Joi.number(),
 });
- 
-module.exports = { NotePayloadSchema };
+
+module.exports = { SongPayloadSchema };
