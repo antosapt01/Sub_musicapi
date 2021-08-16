@@ -1,5 +1,5 @@
 {
-  "name": "notes-app-back-end",
+  "name": "open-music-v2",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -21,9 +21,11 @@
   },
   "dependencies": {
     "@hapi/hapi": "^20.1.5",
+    "@hapi/jwt": "^2.0.1",
+    "bcrypt": "^5.0.1",
     "dotenv": "^10.0.0",
     "joi": "^17.4.2",
-    "nanoid": "^3.1.23",  
+    "nanoid": "^3.1.23",
     "nanoid-dictionary": "^4.3.0",
     "node-pg-migrate": "^5.10.0",
     "pg": "^8.7.1"

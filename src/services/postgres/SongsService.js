@@ -3,6 +3,7 @@ const { nanoid } = require('nanoid');
 const InvariantError = require('../../exceptions/InvariantError');
 const NotFoundError = require('../../exceptions/NotFoundError');
 const { mapDBToModel } = require('../../utils');
+const AuthorizationError = require('../../exceptions/AuthorizationError');
 
 class SongsService {
   constructor() {
@@ -30,7 +31,10 @@ class SongsService {
   }
 
   async getSongs() {
-    const result = await this._pool.query('SELECT id, title, performer FROM songs');
+    const query = {
+      text: 'SELECT id, title, performer FROM songs',
+    };
+    const result = await this._pool.query(query);
     return result.rows.map(mapDBToModel);
   }
 
@@ -41,7 +45,7 @@ class SongsService {
     };
     const result = await this._pool.query(query);
 
-    if (!result.rows.length) {
+    if (!result.rowCount) {
       throw new NotFoundError('lagu tidak ditemukan');
     }
 
@@ -58,7 +62,7 @@ class SongsService {
     };
 
     const result = await this._pool.query(query);
-    if (!result.rows.length) {
+    if (!result.rowCount) {
       throw new NotFoundError('Gagal memperbarui lagu. Id tidak ditemukan');
     }
   }
@@ -70,8 +74,23 @@ class SongsService {
     };
 
     const result = await this._pool.query(query);
-    if (!result.rows.length) {
+    if (!result.rowCount) {
       throw new NotFoundError('lagu gagal dihapus. Id tidak ditemukan');
+    }
+  }
+
+  async verifySongOwner(id, owner) {
+    const query = {
+      text: 'SELECT * FROM songs WHERE id = $1',
+      values: [id],
+    };
+    const result = await this._pool.query(query);
+    if (!result.rowCount) {
+      throw new NotFoundError('lagu tidak ditemukan');
+    }
+    const song = result.rows[0];
+    if (song.owner !== owner) {
+      throw new AuthorizationError('Anda tidak berhak mengakses resource ini');
     }
   }
 }
