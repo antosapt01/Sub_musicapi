@@ -1,5 +1,5 @@
 {
-  "name": "open-music-v2",
+  "name": "open-music-v3",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -21,13 +21,16 @@
   },
   "dependencies": {
     "@hapi/hapi": "^20.1.5",
+    "@hapi/inert": "^6.0.3",
     "@hapi/jwt": "^2.0.1",
+    "amqplib": "^0.8.0",
     "bcrypt": "^5.0.1",
     "dotenv": "^10.0.0",
     "joi": "^17.4.2",
     "nanoid": "^3.1.23",
     "nanoid-dictionary": "^4.3.0",
     "node-pg-migrate": "^5.10.0",
-    "pg": "^8.7.1"
+    "pg": "^8.7.1",
+    "redis": "^3.1.2"
   }
 }
